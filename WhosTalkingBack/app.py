@@ -16,8 +16,11 @@ POSTGRES = {
 def create_app():
     app = Flask(__name__)
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
-            %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
+    # for production
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
+    #         %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
+    # for development I'll just work locally
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///whosTalkingDb.sqlite3'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['DEBUG'] = True
 
@@ -25,6 +28,8 @@ def create_app():
 
     @app.route('/')
     def home_route():
+        DB.session.add(User(display_name='example', gender='female',
+                            ethnicity='white', other=None))
         DB.session.add(User(display_name='example', gender='female',
                             ethnicity='white', other=None))
         DB.session.commit()

@@ -10,3 +10,6 @@ class User(DB.Model):
     gender = DB.Column(DB.Text)
     ethnicity = DB.Column(DB.Text)
     other = DB.Column(DB.Text)
+
+    def __repr__(self):
+        return f'{self.display_name}: {self.ethnicity}, {self.gender}, {self.other}'
